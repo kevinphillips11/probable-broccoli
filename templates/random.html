@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            max-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movies</h1>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Image</th>
+        </tr>
+        {% for title, image_urls in movies.items() %}
+        <tr>
+            <td>{{ title }}</td>
+            <td>
+                {% for url in image_urls %}
+                <img src="{{ url }}" alt="{{ title }} Image">
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

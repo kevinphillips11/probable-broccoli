@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... other meta tags ... -->
+    <title>Stars</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div id="alphabet-buttons">
+            <!-- Dynamically populate alphabet buttons -->
+        </div>
+
+        <div id="stars-grid" class="row"></div>
+    </div>
+
+    <script>
+        function loadStars(letter = '') {
+            let apiUrl = 'http://127.0.0.1:5000/stars';
+            if (letter) {
+                apiUrl += `?start=${letter}`;
+            }
+
+            axios.get(apiUrl)
+                .then(response => {
+                    const stars = response.data;
+                    const grid = document.getElementById('stars-grid');
+                    grid.innerHTML = ''; // Clear existing content
+
+                    stars.forEach(star => {
+                        grid.innerHTML += `
+                        <div class="col-md-4">
+                            <img src="#" alt="${star.Name} photo"> <!-- assuming an image URL in the API response -->
+                            <h4>${star.Name}</h4>
+                        </div>
+                        `;
+                    });
+                });
+        }
+
+        const alphabetButtons = document.getElementById('alphabet-buttons');
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (let letter of alphabet) {
+            const button = document.createElement('button');
+            button.innerText = letter;
+            button.addEventListener('click', function() {
+                loadStars(letter);
+            });
+            alphabetButtons.appendChild(button);
+        }
+
+        loadStars();  // Load stars on page load
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ star.Name }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</head>
+
+
+
+<body>
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/movies">Movies</a>
+            <a class="nav-item nav-link" href="/stars">Stars</a>
+        </div>
+    </div>
+    
+
+
+    <div class="container mt-5">
+        <h1>{{ star.Name }}</h1>
+        <h3>Movies:</h3>
+        <ul>
+            {% for movie in movies %}
+                <li><a href="/movies/{{ movie }}">{{ movie }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <h3>Images:</h3>
+        {% if star.Images %}
+        <div id="starCarousel" class="carousel slide" data-ride="carousel" data-interval="2000">
+            <div class="carousel-inner">
+                {% for image in star.Images %}
+                <div class="carousel-item {{ 'active' if loop.first }}">
+                    <img src="{{ image }}" class="d-block" alt="{{ star.Name }} Image" style="max-width: 100%; max-height: 150px;">
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#starCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#starCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        {% else %}
+        <p>No images for this model.</p>
+        {% endif %}
+    </div>
+    
+    <!-- Bootstrap JS and JQuery for the carousel -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<!-- <body>
+    <div class="container mt-5">
+        <h1>{{ star.Name }}</h1>
+        <h3>Movies:</h3>
+        <ul>
+            {% for movie in movies %}
+                <li><a href="/movies/{{ movie }}">{{ movie }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html> -->

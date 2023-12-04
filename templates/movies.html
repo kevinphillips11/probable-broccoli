@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function sortMovies(order) {
+            window.location.href = '/movies?sort=' + order;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/movies">Movies</a>
+            <a class="nav-item nav-link" href="/stars">Stars</a>
+        </div>
+    </div>
+    
+
+    <div class="container mt-5">
+        <h1 class="text-center">Movies</h1>
+        <button onclick="sortMovies('asc')" class="btn btn-info">Sort by Duration Ascending</button>
+        <button onclick="sortMovies('desc')" class="btn btn-info">Sort by Duration Descending</button>
+        <div class="row mt-4">
+            {% for movie in movies %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="/movies/{{ movie.Title }}">{{ movie.Title }}</a></h5>
+                            <p class="card-text">Duration: {{ movie.Duration }} minutes</p>
+                            {% if movie.Image %}
+                                <img src="{{ movie.Image }}" class="img-fluid" alt="{{ movie.Title }} Image">
+                            {% else %}
+                                <p>No Image Available</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="mt-4 d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                    <a class="page-link" 
+                       href="?page={{ page-1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_order %}&sort={{ sort_order }}{% endif %}">
+                       &laquo; Prev
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <span class="page-link">{{ page }}</span>
+                </li>
+                <li class="page-item">
+                    <!-- As previously mentioned, for a complete implementation, you might need to add more logic to handle if there's a next page -->
+                    <a class="page-link" 
+                       href="?page={{ page+1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_order %}&sort={{ sort_order }}{% endif %}">
+                       Next &raquo;
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+
+</body>
+</html>

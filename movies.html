@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... other meta tags ... -->
+    <title>Movies</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <select id="sort-dropdown">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+
+        <div id="movies-grid" class="row"></div>
+    </div>
+
+    <script>
+        function loadMovies(sortOrder = 'asc') {
+            axios.get('http://127.0.0.1:5000/movies?sort=' + sortOrder)
+                .then(response => {
+                    const movies = response.data;
+                    const grid = document.getElementById('movies-grid');
+                    grid.innerHTML = ''; // Clear the existing content
+
+                    movies.forEach(movie => {
+                        grid.innerHTML += `
+                        <div class="col-md-4">
+                            <img src="#" alt="${movie.Title} cover"> <!-- assuming an image URL in the API response -->
+                            <h4>${movie.Title}</h4>
+                            <p>${movie.Duration} minutes</p>
+                            <a href="${movie.Website}">Visit Website</a>
+                            <!-- More movie details here ... -->
+                        </div>
+                        `;
+                    });
+                });
+        }
+
+        document.getElementById('sort-dropdown').addEventListener('change', function() {
+            loadMovies(this.value);
+        });
+
+        loadMovies();  // Load movies on page load
+    </script>
+</body>
+</html>

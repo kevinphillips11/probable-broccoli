@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5 text-center">
+        <h2>Discover Movies & Stars</h2>
+        <input type="text" id="search-input" class="form-control mt-3" placeholder="Search for movies or stars...">
+        <button id="search-btn" class="btn btn-primary mt-3">Search</button>
+    </div>
+
+    <script>
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const query = document.getElementById('search-input').value;
+            window.location.href = '/search?q=' + encodeURIComponent(query);
+        });
+    </script>
+</body>
+</html>

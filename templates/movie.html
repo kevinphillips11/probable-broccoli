@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.Title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/movies">Movies</a>
+            <a class="nav-item nav-link" href="/stars">Stars</a>
+        </div>
+    </div>
+    
+
+    <div class="container mt-5">
+        <h1>{{ movie.Title }}</h1>
+        <p>Duration: {{ movie.Duration }} minutes</p>
+
+
+        <a id="googleSearchLink" href="" class="btn btn-primary mb-3" target="_blank">Google Search Link</a>
+
+        <script>
+            // Function to properly escape special characters for URLs
+            function escapeForUrl(str) {
+                return encodeURIComponent(str).replace(/'/g, '%27').replace(/"/g, '%22');
+            }
+        
+            var movie = {
+                Title: escapeForUrl("{{ movie.Title }}"),
+                Website: escapeForUrl("{{ movie.Website }}"),
+            };
+        
+            var stars = [
+                "{{ stars|join('\', \'') }}" // Assuming 'stars' is an array of strings
+            ];
+        
+            // Replace spaces with '+'
+            function replaceSpaces(str) {
+                return str.replace(/ /g, '+');
+            }
+        
+            // Construct the Google search URL
+            var searchQuery = 'https://www.google.com/search?tbm=vid&q=' + replaceSpaces(movie.Title) + '+' + replaceSpaces(movie.Website) + '+' + stars.map(replaceSpaces).join('+') + '+full+video';
+        
+            // Update the href of the anchor tag
+            document.getElementById("googleSearchLink").href = searchQuery;
+        </script>
+        
+        
+        
+        
+
+        <p>Website: <a href="{{ movie.Website }}" target="_blank">{{ movie.Website }}</a></p>
+        <h3>Images:</h3>
+        <div class="row">
+            {% for image in images %}
+                <div class="col-md-4">
+                    <img src="{{ image }}" class="img-fluid" alt="{{ movie.Title }} Image">
+                </div>
+            {% endfor %}
+        </div>
+        <h3>Stars:</h3>
+        <ul>
+            {% for star in stars %}
+                <li><a href="/stars/{{ star }}">{{ star }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

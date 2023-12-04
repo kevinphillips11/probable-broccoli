@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... other meta tags ... -->
+    <title>Star Details</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div id="star-details"></div>
+    </div>
+
+    <script>
+        const starName = new URLSearchParams(window.location.search).get('name');
+
+        axios.get(`http://127.0.0.1:5000/stars/${starName}`)
+            .then(response => {
+                const star = response.data;
+                const detailsDiv = document.getElementById('star-details');
+                detailsDiv.innerHTML = `
+                    <img src="#" alt="${star.Name} photo"> <!-- assuming an image URL in the API response -->
+                    <h2>${star.Name}</h2>
+                    <p>Birthday: ${star.Birthdate}</p>
+                    <p>Bio: ${star.Bio}</p>
+                    <!-- List of movies and other details can be added similarly -->
+                `;
+            });
+    </script>
+</body>
+</html>

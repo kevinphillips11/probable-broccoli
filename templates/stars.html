@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stars</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/movies">Movies</a>
+            <a class="nav-item nav-link" href="/stars">Stars</a>
+        </div>
+    </div>
+    
+
+    <div class="container mt-5">
+        <h1 class="text-center">Stars</h1>
+        <div class="btn-group">
+            <button onclick="window.location.href='/stars?letter=All Stars'" class="btn btn-info">All Stars</button>
+            {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+                <button onclick="window.location.href='/stars?letter={{ letter }}'" class="btn btn-secondary">{{ letter }}</button>
+            {% endfor %}
+        </div>
+    
+        <table class="table mt-4">
+            <tbody>
+                <tr>
+                    {% for star in stars %}
+                        <td>
+                            <div class="d-flex flex-column align-items-center">
+                                <h2><a href="/stars/{{ star.Name }}">{{ star.Name }}</a></h2>
+                                {% if star.Images %}
+                                    <div id="starCarousel{{ loop.index }}" class="carousel slide" data-ride="carousel" data-interval="2000">
+                                        <div class="carousel-inner">
+                                            {% for image in star.Images %}
+                                                <div class="carousel-item {{ 'active' if loop.first }}">
+                                                    <img src="{{ image }}" class="d-block" alt="{{ star.Name }} Image" style="max-width: 100%; max-height: 150px;">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <p>No images for this model.</p>
+                                {% endif %}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+
+
+    <div class="mt-4 d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                    <a class="page-link" href="?letter={{ letter }}&page={{ page-1 }}">&laquo; Prev</a>
+                </li>
+                <li class="page-item active">
+                    <span class="page-link">{{ page }}</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?letter={{ letter }}&page={{ page+1 }}">Next &raquo;</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    
+
+</body>
+</html>
