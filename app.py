@@ -183,5 +183,5 @@ app.register_blueprint(movies_blueprint, url_prefix='/movies')
 app.register_blueprint(stars_blueprint, url_prefix='/stars')
 
 
-if __name__ == '__main__':
+def start_app():
     app.run(debug=True)
